@@ -18,6 +18,19 @@ export default function App() {
     fetchGuests();
   }, []);
 
+  useEffect(() => {
+    async function fetchSelectedGuest() {
+      const guestFromApi = await getGuest(selectedGuestId);
+      setSelectedGuest(guestFromApi);
+    }
+
+    if (selectedGuestId) {
+      fetchSelectedGuest();
+    } else {
+      setSelectedGuest(null);
+    }
+  }, [selectedGuestId]);
+
   return (
     <main>
       <h1>Guest List</h1>
