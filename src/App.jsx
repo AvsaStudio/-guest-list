@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getGuests } from "./api";
+import { getGuests, getGuest } from "./components/api";
 import GuestList from "./components/GuestList";
 
 export default function App() {
@@ -29,7 +29,7 @@ export default function App() {
           <p>{selectedGuest.phone}</p>
           <p>{selectedGuest.bio}</p>
           <p>{selectedGuest.job}</p>
-          <button onClick={() => setSelectedGuestId(null)}>Back</button>{" "}
+          <button onClick={() => setSelectedGuestId(null)}>Back</button>
         </section>
       ) : (
         <GuestList guests={guests} onSelectGuest={setSelectedGuestId} />

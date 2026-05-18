@@ -9,6 +9,32 @@ on a guest to learn more details about them.
 Read the [API documentation](https://fsa-crud-2aa9294fe819.herokuapp.com/api/). You will
 be working with the `/guests` endpoints.
 
+src/
+App.jsx
+api.js
+components/
+GuestList.jsx
+GuestDetails.jsx
+GuestListItem.jsx
+index.css
+
+Array
+id
+number
+ID of the artist
+
+name
+string
+Artist name
+
+imageUrl
+string
+Artist's image URL
+
+description
+string
+Artist description
+
 ## Instructions
 
 You'll be starting from scratch! You are highly encouraged to reference previous
