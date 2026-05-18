@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getGuests, getGuest } from "./components/api";
 import GuestList from "./components/GuestList";
+import GuestDetails from "./components/GuestDetails";
 
 export default function App() {
   const [guests, setGuests] = useState([]);
@@ -11,8 +12,17 @@ export default function App() {
 
   useEffect(() => {
     async function fetchGuests() {
-      const guestsFromApi = await getGuests();
-      setGuests(guestsFromApi);
+      try {
+        setLoading(true);
+        setError(null);
+
+        const guestsFromApi = await getGuests();
+        setGuests(guestsFromApi);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
     }
 
     fetchGuests();
@@ -20,8 +30,17 @@ export default function App() {
 
   useEffect(() => {
     async function fetchSelectedGuest() {
-      const guestFromApi = await getGuest(selectedGuestId);
-      setSelectedGuest(guestFromApi);
+      try {
+        setLoading(true);
+        setError(null);
+
+        const guestFromApi = await getGuest(selectedGuestId);
+        setSelectedGuest(guestFromApi);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
     }
 
     if (selectedGuestId) {
@@ -35,15 +54,14 @@ export default function App() {
     <main>
       <h1>Guest List</h1>
 
+      {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
+
       {selectedGuest ? (
-        <section>
-          <h2>{selectedGuest.name}</h2>
-          <p>{selectedGuest.email}</p>
-          <p>{selectedGuest.phone}</p>
-          <p>{selectedGuest.bio}</p>
-          <p>{selectedGuest.job}</p>
-          <button onClick={() => setSelectedGuestId(null)}>Back</button>
-        </section>
+        <GuestDetails
+          guest={selectedGuest}
+          onBack={() => setSelectedGuestId(null)}
+        />
       ) : (
         <GuestList guests={guests} onSelectGuest={setSelectedGuestId} />
       )}
